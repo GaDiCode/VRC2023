@@ -69,7 +69,10 @@ void extension_condition();
 //extern Motor shooter;
 //extern Motor intake;
 extern Servo shooterServo;
-//extern Servo extensionServo;
+extern Servo extensionServo;
 
 void shooter_run_servo();
-void extension_run_servo();
+void extension_run_servo_hand();
+void extension_run_servo_auto();
+
+extern unsigned long _t;

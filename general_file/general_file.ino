@@ -12,15 +12,16 @@ int PS2_SEL = 15;
 int PS2_CLK = 14;
 int error = 0;
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(); 
 PS2X ps2x;
+unsigned long _t =0;
 
 //Motor leftWheel(12,13);
 //Motor rightWheel(14,15);
 //Motor shooter(8,9);
 //Motor intake(10,11);
 Servo shooterServo(5);
-//Servo extensionServo(3);
+Servo extensionServo(3);
 
 void setup() {
   pinMode(25, INPUT_PULLUP);
@@ -129,6 +130,7 @@ void setup() {
   */
   //  motorSlider a(18, 19, "acnv");
   ESPUI.begin("ESPUI Control");
+  _t = millis();
 }
 
 void loop() {
