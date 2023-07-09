@@ -62,14 +62,14 @@ int secondState = 950;
 void shooter_run_servo(){
   Serial.println(shooterServo.getState());
   if(ps2x.ButtonPressed(PSB_CIRCLE)){
-    if(shooterServo.getState())
+    if(shooterServo.getState() == 1)
     {
       shooterServo.run(1250);
-      shooterServo.setState(false);
+      shooterServo.setState(0);
     }
-    else{
+    else if(shooterServo.getState() == 0){
       shooterServo.run(350);
-      shooterServo.setState(true);
+      shooterServo.setState(1);
     }
   }
 }
