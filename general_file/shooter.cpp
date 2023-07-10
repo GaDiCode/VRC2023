@@ -26,7 +26,7 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 2700;
+  FinalSpeed = 2900;
   PID_Shooter();
   pwm.setPWM(8, 0, 0);
   pwm.setPWM(9, 0, cur_speed);
@@ -62,12 +62,12 @@ int secondState = 950;
 void shooter_run_servo(){
   Serial.println(shooterServo.getState());
   if(ps2x.ButtonPressed(PSB_CIRCLE)){
-    shooterServo.run(1250);
+    shooterServo.run(350);
     PreTimer = millis();
     Serial.println("Closed");
   }
   if(millis() - PreTimer > 500) {
-    shooterServo.run(350);
+    shooterServo.run(1250);
     Serial.println("opened");
   }
 }
