@@ -10,7 +10,7 @@ float Kd = 0.1;
 float dt = 0.1;
 float p, i, d;
 float FinalSpeed=2500;
-
+long unsigned int PreTimer = 0;
 void shooter_break() {
   FinalSpeed = 0;
   PID_Shooter();
@@ -26,7 +26,7 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 3000;
+  FinalSpeed = 2700;
   PID_Shooter();
   pwm.setPWM(8, 0, 0);
   pwm.setPWM(9, 0, cur_speed);
@@ -62,14 +62,12 @@ int secondState = 950;
 void shooter_run_servo(){
   Serial.println(shooterServo.getState());
   if(ps2x.ButtonPressed(PSB_CIRCLE)){
-    if(shooterServo.getState() == 1)
-    {
-      shooterServo.run(1250);
-      shooterServo.setState(0);
-    }
-    else if(shooterServo.getState() == 0){
-      shooterServo.run(350);
-      shooterServo.setState(1);
-    }
+    shooterServo.run(1250);
+    PreTimer = millis();
+    Serial.println("Closed");
+  }
+  if(millis() - PreTimer > 500) {
+    shooterServo.run(350);
+    Serial.println("opened");
   }
 }

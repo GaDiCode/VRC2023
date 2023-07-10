@@ -76,3 +76,5 @@ void extension_run_servo_hand();
 void extension_run_servo_auto();
 
 extern unsigned long _t;
+
+extern long unsigned int PreTimer;

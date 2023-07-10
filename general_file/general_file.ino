@@ -15,8 +15,8 @@ int error = 0;
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(); 
 PS2X ps2x;
 unsigned long _t =0;
-
 //Motor leftWheel(12,13);
+
 //Motor rightWheel(14,15);
 //Motor shooter(8,9);
 //Motor intake(10,11);
