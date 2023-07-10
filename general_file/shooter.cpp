@@ -26,7 +26,7 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 2900;
+  FinalSpeed = 3200;
   PID_Shooter();
   pwm.setPWM(8, 0, 0);
   pwm.setPWM(9, 0, cur_speed);
