@@ -1,24 +1,8 @@
-#include <DNSServer.h>
-#include <ESPUI.h>
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <PS2X_lib.h>
 //#include "motor.h"
 #include "servo.h"
-
-extern const byte DNS_PORT;
-extern IPAddress apIP;
-extern DNSServer dnsServer;
-extern const char *ssid;
-extern const char *password;
-extern const char *hostname;
-extern bool dir;
-extern int MotorOrd;
-extern int pin1, pin2;
-void setPWM(int chan1, int chan2, bool state, uint16_t val);
-void Speed_Control(Control *sender, int type);
-void Reverse(Control *sender, int value);
-void NumberMotor(Control* sender, int type);
 
 extern int PS2_DAT;
 extern int PS2_CMD;
