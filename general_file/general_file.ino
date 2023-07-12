@@ -63,4 +63,5 @@ void loop() {
   movement_condition();
   shooter_condition();
   shooter_run_servo();
+  extension_run_servo_hold();
 }
