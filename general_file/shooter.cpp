@@ -28,8 +28,8 @@ void shooter_break() {
 void shooter() {
   FinalSpeed = 3200;
   PID_Shooter();
-  pwm.setPWM(8, 0, 0);
-  pwm.setPWM(9, 0, cur_speed);
+  pwm.setPWM(9, 0, 0);
+  pwm.setPWM(8, 0, cur_speed);
   if(cur_speed < FinalSpeed/2) delay(30);
 }
 
