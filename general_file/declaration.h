@@ -58,6 +58,7 @@ extern Servo extensionServo;
 void shooter_run_servo();
 void extension_run_servo_hand();
 void extension_run_servo_auto();
+void extension_run_servo_hold();
 
 extern unsigned long _t;
 

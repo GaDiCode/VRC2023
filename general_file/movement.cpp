@@ -14,13 +14,13 @@ void joystick_controller() {
   
   if(Ry > 128) {
     //rightWheel.run_backward(map(Ry, 128, 255, 500, speed));
-    pwm.setPWM(13, 0, 0);
-    pwm.setPWM(12, 0, map(Ry, 128, 255, 500, speed));
+    pwm.setPWM(12, 0, 0);
+    pwm.setPWM(13, 0, map(Ry, 128, 255, 500, speed));
   }
   else if(Ry < 127) {
     //rightWheel.run_forward(map(Ry, 127, 0, 500, speed));
-    pwm.setPWM(13, 0, map(Ry, 127, 0, 500, speed));
-    pwm.setPWM(12, 0, 0);
+    pwm.setPWM(12, 0, map(Ry, 127, 0, 500, speed));
+    pwm.setPWM(13, 0, 0);
   }
   else {
     //rightWheel.brake();
@@ -31,13 +31,13 @@ void joystick_controller() {
   
   if(Ly > 128) {
     //leftWheel.run_backward(map(Ly, 128, 255, 500, speed));
-    pwm.setPWM(15, 0, 0);
-    pwm.setPWM(14, 0, map(Ly, 130, 255, 500, speed));
+    pwm.setPWM(14, 0, 0);
+    pwm.setPWM(15, 0, map(Ly, 130, 255, 500, speed));
   }
   else if(Ly < 127) {
     //leftWheel.run_forward(map(Ly, 127, 0, 500, speed));
-    pwm.setPWM(15, 0, map(Ly, 127, 0, 500, speed));
-    pwm.setPWM(14, 0, 0);
+    pwm.setPWM(14, 0, map(Ly, 127, 0, 500, speed));
+    pwm.setPWM(15, 0, 0);
   }
   else {
     //leftWheel.brake();
