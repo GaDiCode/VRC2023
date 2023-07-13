@@ -26,7 +26,7 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 3200;
+  FinalSpeed = 3500;
   PID_Shooter();
   pwm.setPWM(9, 0, 0);
   pwm.setPWM(8, 0, cur_speed);
@@ -43,9 +43,7 @@ void PID_Shooter() {
 }
 
 void shooter_condition(){
-  if(ps2x.ButtonPressed(PSB_R1)) dem_shooter++;
-  // Serial.println(dem);
-
+  /*
   if(!ps2x.Button(PSB_R1)) {
   //if(dem_shooter%2==0) {
     shooter_break(); 
@@ -53,7 +51,10 @@ void shooter_condition(){
   else {
     shooter();
   }
-  //Serial.println(cur_speed);
+  */
+  if(ps2x.ButtonPressed(PSB_R1)) dem_shooter++;
+  dem_shooter%2==0 ? shooter_break() : shooter();
+  Serial.println(dem_shooter);
 }
 
 int firstState = 0;
@@ -64,10 +65,10 @@ void shooter_run_servo(){
   if(ps2x.ButtonPressed(PSB_CIRCLE)){
     shooterServo.run(350);
     PreTimer = millis();
-    Serial.println("Closed");
+    //Serial.println("Closed");
   }
   if(millis() - PreTimer > 500) {
     shooterServo.run(1250);
-    Serial.println("opened");
+    //Serial.println("opened");
   }
 }
