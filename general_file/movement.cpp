@@ -32,7 +32,7 @@ void joystick_controller() {
   if(Ly > 128) {
     //leftWheel.run_backward(map(Ly, 128, 255, 500, speed));
     pwm.setPWM(14, 0, 0);
-    pwm.setPWM(15, 0, map(Ly, 130, 255, 500, speed));
+    pwm.setPWM(15, 0, map(Ly, 128, 255, 500, speed));
   }
   else if(Ly < 127) {
     //leftWheel.run_forward(map(Ly, 127, 0, 500, speed));
