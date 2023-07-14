@@ -56,3 +56,6 @@ extern unsigned long _t;
 
 extern long unsigned int PreTimer, ShooterTimer;
 extern bool ShooterServoCondition;
+extern float shooterSpeed;
+
+void shooterSpeedMod();

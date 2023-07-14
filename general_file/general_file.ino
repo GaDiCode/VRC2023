@@ -61,6 +61,7 @@ void loop() {
   ps2x.read_gamepad(false, false);
   overall_intake();
   movement_condition();
+  shooterSpeedMod();
   shooter_condition();
   shooter_run_servo();
   extension_run_servo_hold();

@@ -10,6 +10,8 @@ float Kd = 0.1;
 float dt = 0.1;
 float p, i, d;
 float FinalSpeed=2500;
+float shooterSpeed=2100;
+
 long unsigned int PreTimer = 0;
 long unsigned int ShooterTimer = 0;
 bool ShooterServoCondition = false;
@@ -28,7 +30,8 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 2550;
+  //FinalSpeed = 2100;
+  FinalSpeed = shooterSpeed;
   PID_Shooter();
   pwm.setPWM(9, 0, 0);
   pwm.setPWM(8, 0, cur_speed);
@@ -70,12 +73,25 @@ void shooter_run_servo(){
   Serial.print("curspeed: "); Serial.println(cur_speed);
   
   if(ps2x.ButtonPressed(PSB_CIRCLE) and ShooterServoCondition){
-    shooterServo.run(350);
+    shooterServo.run(500);
     PreTimer = millis();
     Serial.println("Closed");
   }
   if(millis() - PreTimer > 500) {
-    shooterServo.run(1250);
+    shooterServo.run(1850);
     Serial.println("opened");
   }
+}
+
+void shooterSpeedMod(){
+  if(ps2x.ButtonReleased(PSB_PAD_UP) && !ps2x.ButtonReleased(PSB_PAD_DOWN)){
+    shooterSpeed += 25;  
+  }
+  else if(!ps2x.ButtonReleased(PSB_PAD_UP) && ps2x.ButtonReleased(PSB_PAD_DOWN)){
+    shooterSpeed -= 25;
+  }
+  else if(ps2x.ButtonPressed(PSB_SQUARE)){
+    shooterSpeed = 2100;  
+  }
+  Serial.print("shooter max speed: "); Serial.println(shooterSpeed);
 }
