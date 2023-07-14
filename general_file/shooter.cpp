@@ -11,6 +11,8 @@ float dt = 0.1;
 float p, i, d;
 float FinalSpeed=2500;
 long unsigned int PreTimer = 0;
+long unsigned int ShooterTimer = 0;
+bool ShooterServoCondition = false;
 void shooter_break() {
   FinalSpeed = 0;
   PID_Shooter();
@@ -26,7 +28,7 @@ void shooter_break() {
 }
 
 void shooter() {
-  FinalSpeed = 3500;
+  FinalSpeed = 2550;
   PID_Shooter();
   pwm.setPWM(9, 0, 0);
   pwm.setPWM(8, 0, cur_speed);
@@ -38,12 +40,12 @@ void PID_Shooter() {
   i += er*dt;
   d = (er-pre_er)*dt;
   cur_speed = (Kp*er) + (Ki*i) + (Kd*d);
-  if(cur_speed > 4095) cur_speed = 4095;
+  if(cur_speed > 4095) cur_speed = FinalSpeed;
   if(cur_speed < 0) cur_speed = 0;
 }
 
 void shooter_condition(){
-  /*
+  //*
   if(!ps2x.Button(PSB_R1)) {
   //if(dem_shooter%2==0) {
     shooter_break(); 
@@ -51,10 +53,9 @@ void shooter_condition(){
   else {
     shooter();
   }
-  */
-  if(ps2x.ButtonPressed(PSB_R1)) dem_shooter++;
-  dem_shooter%2==0 ? shooter_break() : shooter();
-  Serial.println(dem_shooter);
+  
+  //if(ps2x.ButtonPressed(PSB_R1)) dem_shooter++;
+  //dem_shooter%2==0 ? shooter_break() : shooter();
 }
 
 int firstState = 0;
@@ -62,13 +63,19 @@ int secondState = 950;
 
 void shooter_run_servo(){
   Serial.println(shooterServo.getState());
-  if(ps2x.ButtonPressed(PSB_CIRCLE)){
+  if (cur_speed < (FinalSpeed - 100)) ShooterTimer = millis();
+  //millis() - ShooterTimer > 2000 ? ShooterServoCondition = true : ShooterServoCondition = false;
+  ShooterServoCondition = millis() - ShooterTimer > 2000;
+  Serial.println(millis() - ShooterTimer);
+  Serial.print("curspeed: "); Serial.println(cur_speed);
+  
+  if(ps2x.ButtonPressed(PSB_CIRCLE) and ShooterServoCondition){
     shooterServo.run(350);
     PreTimer = millis();
-    //Serial.println("Closed");
+    Serial.println("Closed");
   }
   if(millis() - PreTimer > 500) {
     shooterServo.run(1250);
-    //Serial.println("opened");
+    Serial.println("opened");
   }
 }

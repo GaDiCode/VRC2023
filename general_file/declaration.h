@@ -40,14 +40,6 @@ extern float er, pre_er, cur_speed, FinalSpeed, Kp, Ki, Kd;
 extern float OriginalSpeed;
 extern float p, i, d, dt;
 
-
-// extension
-extern int PWM_UP, PWM_DOWN, PWM_STOP, buttonL1, buttonR1, buttonL2, buttonR2;
-void ClimbUp();
-void ClimbDown();
-void StopClimbing();
-void extension_condition();
-
 //extern Motor leftWheel;
 //extern Motor rightWheel;
 //extern Motor shooter;
@@ -62,4 +54,5 @@ void extension_run_servo_hold();
 
 extern unsigned long _t;
 
-extern long unsigned int PreTimer;
+extern long unsigned int PreTimer, ShooterTimer;
+extern bool ShooterServoCondition;

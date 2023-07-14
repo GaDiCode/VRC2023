@@ -76,16 +76,16 @@ void extension_run_servo_auto(){
 void extension_run_servo_hold(){
   if(ps2x.Button(PSB_TRIANGLE) && !ps2x.Button(PSB_CROSS)){
     extensionServo.run(open_value);
-    Serial.println("opening");
+    //Serial.println("opening");
   }
 
   else if(ps2x.Button(PSB_CROSS) && !ps2x.Button(PSB_TRIANGLE)){
     extensionServo.run(close_value);
-    Serial.println("closing");
+    //Serial.println("closing");
   }
 
   else{
     extensionServo.run(stop_value);
-    Serial.println("stop");
+    //Serial.println("stop");
   }
 }
