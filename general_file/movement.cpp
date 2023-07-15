@@ -24,8 +24,19 @@ void joystick_controller() {
   }
   else {
     //rightWheel.brake();
-    pwm.setPWM(12, 0, 4095);
-    pwm.setPWM(13, 0, 4095);
+    //old
+    //pwm.setPWM(12, 0, 4095);
+    //pwm.setPWM(13, 0, 4095);
+    
+    if(ps2x.Button(PSB_PAD_RIGHT)){
+      pwm.setPWM(12,0,0);
+      pwm.setPWM(13,0,1000);  
+    }
+    else{
+      pwm.setPWM(12,0,4095);
+      pwm.setPWM(13,0,4095); 
+    }
+    
   }
   
   
@@ -41,8 +52,19 @@ void joystick_controller() {
   }
   else {
     //leftWheel.brake();
-    pwm.setPWM(14, 0, 4095);
-    pwm.setPWM(15, 0, 4095);
+    //old
+    //pwm.setPWM(14, 0, 4095);
+    //pwm.setPWM(15, 0, 4095);
+
+    if(ps2x.Button(PSB_PAD_LEFT)){
+      pwm.setPWM(14,0,0);
+      pwm.setPWM(15,0,1000);  
+    }
+    else{
+      pwm.setPWM(14,0,4095);
+      pwm.setPWM(15,0,4095);
+    }
+    
   }
 }
 
@@ -55,10 +77,24 @@ void motor_break(){
     pwm.setPWM(15, 0, 4095);
 }
 
+
+void pad_controller(){
+  if(ps2x.Button(PSB_PAD_LEFT)){
+    pwm.setPWM(14,0,0);
+    pwm.setPWM(15,0,1000);
+  }
+  else if(ps2x.Button(PSB_PAD_RIGHT)){
+    pwm.setPWM(12,0,0);
+    pwm.setPWM(13,0,1000);  
+  }
+  else motor_break();
+}
+
 void movement_condition(){
   if(ps2x.Button(PSB_R2)) motor_break();
   else
   {
     joystick_controller();
+    if( (Ly>=125 && Ly<=130) && (Ry>=125 && Ry<=130)) pad_controller();
   }
 }

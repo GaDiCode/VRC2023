@@ -59,3 +59,13 @@ extern bool ShooterServoCondition;
 extern float shooterSpeed;
 
 void shooterSpeedMod();
+
+float kalman_filter(float cur);
+extern float kalman_gain;
+extern float err_measure;
+extern float err_estimate;
+extern float q;
+extern float current_estimate;
+extern float last_estimate;
+
+void pad_controller();
