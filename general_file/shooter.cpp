@@ -10,23 +10,27 @@ float Kd = 0.1;
 float dt = 0.1;
 float p, i, d;
 float FinalSpeed;
-float shooterSpeed=2350;
+float shooterSpeed=2100;
+long maxSpeed = 3000;
 
 long unsigned int PreTimer = 0;
 long unsigned int ShooterTimer = 0;
 bool ShooterServoCondition = false;
+unsigned long prevShooterTime = 0;
 void shooter_break() {
   FinalSpeed = 0;
   //PID_Shooter();
   //cur_speed = kalman_filter(cur_speed);
   cur_speed = 0;
   if(cur_speed <FinalSpeed){
-    pwm.setPWM(8, 0, 4095);
-    pwm.setPWM(9, 0, 4095);
+    shooterMotor.brake();
+    //pwm.setPWM(8, 0, 4095);
+    //pwm.setPWM(9, 0, 4095);
   }
   else {
-    pwm.setPWM(9, 0, 0);
-    pwm.setPWM(8, 0, cur_speed);
+    shooterMotor.run_forward(cur_speed);
+    //pwm.setPWM(9, 0, 0);
+    //pwm.setPWM(8, 0, cur_speed); 
   }
   delay(10);
 }
@@ -35,7 +39,11 @@ void shooter() {
   //FinalSpeed = 2100;
   FinalSpeed = shooterSpeed;
   //PID_Shooter();
-  cur_speed = shooterSpeed;
+
+  Serial.print("deltat: "); Serial.println(millis() - prevShooterTime);
+
+  if(millis() - prevShooterTime <= 1000) cur_speed = maxSpeed;
+  else cur_speed = shooterSpeed;
 
   //if(cur_speed<FinalSpeed) cur_speed+=200;
   //else cur_speed = FinalSpeed;
@@ -81,10 +89,10 @@ int secondState = 950;
 void shooter_run_servo(){
   //Serial.println(shooterServo.getState());
 
-  /*
-  if (cur_speed < (FinalSpeed - 100)) ShooterTimer = millis();
+  
+  //if (cur_speed < (FinalSpeed - 100)) ShooterTimer = millis();
   //millis() - ShooterTimer > 2000 ? ShooterServoCondition = true : ShooterServoCondition = false;
-  ShooterServoCondition = millis() - ShooterTimer > 5000;
+  ShooterServoCondition = millis() - ShooterTimer > 7000;
   //Serial.println(millis() - ShooterTimer);
   Serial.print("curspeed: "); Serial.println(cur_speed);
   
@@ -97,7 +105,9 @@ void shooter_run_servo(){
     shooterServo.run(1850);
     //Serial.println("opened");
   }
-  */
+  
+
+  /*
   if(ps2x.ButtonPressed(PSB_CIRCLE)){
     shooterServo.run(500);
     PreTimer = millis();
@@ -107,6 +117,7 @@ void shooter_run_servo(){
     shooterServo.run(1850);
     Serial.println("opened");
   }
+  */
 }
 
 void shooterSpeedMod(){
@@ -123,7 +134,7 @@ void shooterSpeedMod(){
 float kalman_gain=0;
 float err_measure=2;
 float err_estimate=2;
-float q=0.01;
+float q = 0.01;
 float current_estimate=0;
 float last_estimate=0;
 
@@ -133,4 +144,29 @@ float kalman_filter(float cur){
   err_estimate = (1.0f - kalman_gain) * err_estimate + fabsf(last_estimate - current_estimate)*q;
   last_estimate = current_estimate;
   return current_estimate;    
+}
+
+
+bool shooterIsHeld = false;
+bool shooterIsRunning = false;
+int shooterCounter = 0;
+//long maxSpeed = 3000;
+
+void shooterHoldCondition(){
+  if(ps2x.ButtonPressed(PSB_R1)){
+    shooterCounter++;
+  }
+
+  if((shooterCounter % 2 ==1 || ps2x.Button(PSB_R1))){
+    if(!shooterIsRunning){
+      prevShooterTime = millis();
+      ShooterTimer = millis();
+      shooterIsRunning = true;
+    }
+    shooter();
+  }
+  else{
+    shooterIsRunning = false;
+    shooter_break();
+  }
 }

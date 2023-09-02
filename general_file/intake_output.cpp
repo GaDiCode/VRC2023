@@ -5,20 +5,23 @@ int intake_state = 0;
 
 void intake(){
     //Serial.println("Intaking");
-    pwm.setPWM(10, 0, 4095);
-    pwm.setPWM(11, 0, 0);
+    intakeMotor.run_forward(4095);
+    //pwm.setPWM(10, 0, 4095);
+    //pwm.setPWM(11, 0, 0);
 }
 
 void output(){
   //Serial.println("Outputing");
-  pwm.setPWM(10, 0, 0);
-  pwm.setPWM(11, 0, 4095);
+  intakeMotor.run_backward(4095);
+  //pwm.setPWM(10, 0, 0);
+  //pwm.setPWM(11, 0, 4095);
 }
 
 void intake_break(){
   //Serial.println("Broken :(");
-    pwm.setPWM(10, 0, 4095);
-    pwm.setPWM(11, 0, 4095);
+  intakeMotor.brake();
+    //pwm.setPWM(10, 0, 4095);
+    //pwm.setPWM(11, 0, 4095);   
 }
 
 void intake_condition(){

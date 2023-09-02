@@ -1,7 +1,7 @@
 #include "declaration.h"
 #include "servo.h"
 
-const int CLOSED =0;
+const int CLOSED = 0;
 const int OPENED = 2;
 const int OPENING = 1;
 const int CLOSING = 3;

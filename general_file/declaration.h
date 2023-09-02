@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <PS2X_lib.h>
-//#include "motor.h"
+#include "motor.h"
 #include "servo.h"
 
 extern int PS2_DAT;
@@ -40,12 +40,15 @@ extern float er, pre_er, cur_speed, FinalSpeed, Kp, Ki, Kd;
 extern float OriginalSpeed;
 extern float p, i, d, dt;
 
-//extern Motor leftWheel;
-//extern Motor rightWheel;
-//extern Motor shooter;
-//extern Motor intake;
+extern Motor leftWheel;
+extern Motor rightWheel;
+extern Motor shooterMotor;
+extern Motor intakeMotor;
 extern Servo shooterServo;
 extern Servo extensionServo;
+
+extern Servo cascadeUp;
+extern Servo cascadeHand;
 
 void shooter_run_servo();
 void extension_run_servo_hand();
@@ -69,3 +72,16 @@ extern float current_estimate;
 extern float last_estimate;
 
 void pad_controller();
+
+extern bool shooterIsHeld;
+extern bool shooterIsRunning;
+void shooterHoldCondition();
+extern unsigned long prevShooterTime;
+extern int shooterCounter;
+extern long maxSpeed;
+extern unsigned long cascadeTime;
+
+void cascade_go_up();
+void cascade_move_hand();
+void cascade();
+

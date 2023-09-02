@@ -15,13 +15,16 @@ int error = 0;
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(); 
 PS2X ps2x;
 unsigned long _t =0;
-//Motor leftWheel(12,13);
-
-//Motor rightWheel(14,15);
-//Motor shooter(8,9);
-//Motor intake(10,11);
+Motor leftWheel(14,15);
+Motor rightWheel(12,13);
+Motor shooterMotor(8,9);
+Motor intakeMotor(10,11);
 Servo shooterServo(5);
 Servo extensionServo(3);
+
+
+Servo cascadeUp(2);
+Servo cascadeHand(4);
 
 void setup() {
   pinMode(25, INPUT_PULLUP);
@@ -32,7 +35,7 @@ void setup() {
   Wire.setClock(400000);
   Serial.begin(115200);
   Serial.print("Ket noi voi tay cam PS2:");
-  for (int i = 0; i < 3; i++) // thử kết nối với tay cầm ps2 trong 10 lần
+  for (int i = 0; i < 10; i++) // thử kết nối với tay cầm ps2 trong 10 lần
   {
     delay(1000); // đợi 1 giây
     // cài đặt chân và các chế độ: GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
@@ -62,7 +65,10 @@ void loop() {
   overall_intake();
   movement_condition();
   shooterSpeedMod();
-  shooter_condition();
+  //shooter_condition();
+  shooterHoldCondition();
   shooter_run_servo();
   extension_run_servo_hold();
+  //cascade_go_up();
+  //cascade_move_hand();
 }
